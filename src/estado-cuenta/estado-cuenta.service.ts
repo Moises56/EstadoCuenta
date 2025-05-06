@@ -127,54 +127,98 @@ export class EstadoCuentaService {
       hour12: true,
     });
 
-    // Mapear los registros de mora a DetallesMora con cálculos de recargo
-    const detallesMora: DetalleMoraDto[] = registrosMora.map((mora) => {
-      const year = mora.OBL_YEAR || '';
-      // Usar valores por defecto (0) para campos numéricos que puedan estar vacíos
-      const impuesto = mora.IMPUESTO != null ? Number(mora.IMPUESTO) : 0;
-      const trenDeAseo =
-        mora.TREN_DE_ASEO != null ? Number(mora.TREN_DE_ASEO) : 0;
-      const tasaBomberos =
-        mora.TASA_BOMBEROS != null ? Number(mora.TASA_BOMBEROS) : 0;
-      const dias = this.calcularDiasVencidos(year);
+    // Convertir registros de mora a un mapa para facilitar la búsqueda por año
+    const moraMap = new Map<string, any>();
+    registrosMora.forEach((mora) => {
+      if (mora.OBL_YEAR) {
+        moraMap.set(mora.OBL_YEAR, mora);
+      }
+    });
 
-      // Calcular recargo según la fórmula:
-      // (impuesto + trenDeAseo + tasaBomberos) * dias * 0.22 / 360
-      const baseImponible = impuesto + trenDeAseo + tasaBomberos;
-      const recargo = (baseImponible * dias * 0.22) / 360;
-      const total = baseImponible + recargo;
+    // Crear un array con todos los años desde 2015 hasta 2025
+    const detallesMora: DetalleMoraDto[] = [];
+    const formatoMoneda = new Intl.NumberFormat('es-HN', {
+      style: 'currency',
+      currency: 'HNL',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
 
-      return {
-        year,
+    for (let year = 2015; year <= 2025; year++) {
+      const yearStr = year.toString();
+      const mora = moraMap.get(yearStr);
+
+      // Si hay datos para este año, usar esos valores, de lo contrario usar ceros
+      const impuestoNumerico = mora
+        ? mora.IMPUESTO != null
+          ? Number(mora.IMPUESTO)
+          : 0
+        : 0;
+      const trenDeAseoNumerico = mora
+        ? mora.TREN_DE_ASEO != null
+          ? Number(mora.TREN_DE_ASEO)
+          : 0
+        : 0;
+      const tasaBomberosNumerico = mora
+        ? mora.TASA_BOMBEROS != null
+          ? Number(mora.TASA_BOMBEROS)
+          : 0
+        : 0;
+      const dias = this.calcularDiasVencidos(yearStr);
+
+      // Calcular recargo según la fórmula
+      const baseImponible =
+        impuestoNumerico + trenDeAseoNumerico + tasaBomberosNumerico;
+      const recargoNumerico = (baseImponible * dias * 0.22) / 360;
+      const totalNumerico = baseImponible + recargoNumerico;
+
+      // Formatear valores con el símbolo de Lempiras y separadores de miles
+      const impuesto = formatoMoneda.format(impuestoNumerico);
+      const trenDeAseo = formatoMoneda.format(trenDeAseoNumerico);
+      const tasaBomberos = formatoMoneda.format(tasaBomberosNumerico);
+      const recargo = formatoMoneda.format(recargoNumerico);
+      const total = formatoMoneda.format(totalNumerico);
+
+      detallesMora.push({
+        year: yearStr,
         impuesto,
         trenDeAseo,
         tasaBomberos,
         recargo,
         total,
         dias,
-      };
-    });
+        // Guardar valores numéricos para cálculos
+        impuestoNumerico,
+        trenDeAseoNumerico,
+        tasaBomberosNumerico,
+        recargoNumerico,
+        totalNumerico,
+      });
+    }
 
-    // Calcular el total general
-    const totalGeneral = detallesMora.reduce(
-      (sum, detalle) => sum + detalle.total,
+    // Calcular el total general (usando los valores numéricos)
+    const totalGeneralNumerico = detallesMora.reduce(
+      (sum, detalle) => sum + detalle.totalNumerico,
       0,
     );
+    const totalGeneral = formatoMoneda.format(totalGeneralNumerico);
 
-    const mora = registrosMora[0];
+    const mora = registrosMora.length > 0 ? registrosMora[0] : null;
 
     // Construir la respuesta usando valores por defecto para campos que puedan estar vacíos
     return {
-      nombre: mora.NOMBRE || 'No disponible',
-      identidad: mora.ACT_ID_CARD || 'No disponible',
+      nombre: mora?.NOMBRE || 'No disponible',
+      identidad: mora?.ACT_ID_CARD || 'No disponible',
       claveCatastral: claveCatastral,
       fecha,
       hora,
       colonia: claveRuta.COLONIA || 'No disponible',
+      nombreColonia: mora?.NOMBRE_COLONIA || 'No disponible', // Agregando el campo nombreColonia de la tabla MORA
       codigoUmaps: claveRuta.UMAPS != null ? claveRuta.UMAPS : 0,
       ruta: claveRuta.RUTA || 'No disponible',
       detallesMora,
       totalGeneral,
+      totalGeneralNumerico,
     };
   }
 
