@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model ClavesRutas {
+  id             String @id @default(uuid()) @map("ClavesRutaId")
+  claveCatastral String @unique @map("CLAVE_CATASTRAL") @db.NVarChar(255)
+  ruta           String @map("RUTA") @db.NVarChar(255)
+  umaps          Float  @map("UMAPS")
+
+  mora        Mora[]
+  rutaColonia RutasColonia? @relation(fields: [ruta], references: [ruta])
+
+  @@map("CLAVES_RUTAS")
+}
+
+model Mora {
+  id            String  @id @default(uuid()) @map("MoraId")
+  artIdDoc      String  @map("ART_ID_DOC") @db.NVarChar(255)
+  actIdCard     String  @map("ACT_ID_CARD") @db.NVarChar(40)
+  nombre        String  @map("NOMBRE") @db.NVarChar(323)
+  sectorColonia String  @map("SECTOR_COLONIA") @db.NVarChar(50)
+  nombreColonia String  @map("NOMBRE_COLONIA") @db.NVarChar(60)
+  oblYear       String  @map("OBL_YEAR") @db.VarChar(50)
+  dias          Int     @map("DIAS")
+  impuesto      Decimal @map("IMPUESTO") @db.Decimal(38, 2)
+  trenDeAseo    Decimal @map("TREN_DE_ASEO") @db.Decimal(38, 2)
+  tasaBomberos  Decimal @map("TASA_BOMBEROS") @db.Decimal(38, 2)
+
+  clavesRutas ClavesRutas? @relation(fields: [artIdDoc], references: [claveCatastral])
+
+  @@map("MORA")
+}
+
+model RutasColonia {
+  id      String @id @default(uuid()) @map("RutaColoniaId")
+  ruta    String @unique @map("RUTA") @db.NVarChar(255)
+  colonia String @map("COLONIA") @db.NVarChar(255)
+
+  clavesRutas ClavesRutas[]
+
+  @@map("RUTAS_COLONIA")
+}
