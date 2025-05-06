@@ -1,6 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { GetEstadoCuentaDto } from './dto/get-estado-cuenta.dto';
 import { GetEstadoCuentaPorRutaDto } from './dto/get-estado-cuenta-por-ruta.dto';
+import { CreateMoraDto } from './dto/create-mora.dto';
 import {
   EstadoCuentaResponseDto,
   DetalleMoraDto,
@@ -106,6 +111,82 @@ export class EstadoCuentaService {
     }
 
     return resultados;
+  }
+
+  /**
+   * Crea un nuevo registro de mora en la base de datos
+   * Maneja correctamente los campos opcionales: impuesto, trenDeAseo, tasaBomberos
+   */
+  async createMora(createMoraDto: CreateMoraDto): Promise<any> {
+    try {
+      // Verificar que la clave catastral existe en ClavesRutas
+      const claveRuta = await this.prisma.$queryRaw`
+        SELECT * FROM CLAVES_RUTAS 
+        WHERE CLAVE_CATASTRAL = ${createMoraDto.artIdDoc}
+      `;
+
+      if (!claveRuta || (claveRuta as any[]).length === 0) {
+        throw new NotFoundException(
+          `Clave catastral ${createMoraDto.artIdDoc} no encontrada`,
+        );
+      }
+
+      // Crear el registro con los campos opcionales
+      // Nota: los valores undefined serán tratados como NULL en la base de datos
+      const result = await this.prisma.$executeRaw`
+        INSERT INTO MORA (
+          MoraId, 
+          ART_ID_DOC, 
+          ACT_ID_CARD, 
+          NOMBRE, 
+          SECTOR_COLONIA, 
+          NOMBRE_COLONIA, 
+          OBL_YEAR, 
+          DIAS, 
+          IMPUESTO, 
+          TREN_DE_ASEO, 
+          TASA_BOMBEROS
+        ) VALUES (
+          ${this.generateUuid()}, 
+          ${createMoraDto.artIdDoc}, 
+          ${createMoraDto.actIdCard}, 
+          ${createMoraDto.nombre}, 
+          ${createMoraDto.sectorColonia}, 
+          ${createMoraDto.nombreColonia}, 
+          ${createMoraDto.oblYear}, 
+          ${createMoraDto.dias}, 
+          ${createMoraDto.impuesto === undefined ? null : createMoraDto.impuesto}, 
+          ${createMoraDto.trenDeAseo === undefined ? null : createMoraDto.trenDeAseo}, 
+          ${createMoraDto.tasaBomberos === undefined ? null : createMoraDto.tasaBomberos}
+        )
+      `;
+
+      return {
+        message: 'Registro de mora creado exitosamente',
+        affectedRows: result,
+      };
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      throw new BadRequestException(
+        `Error al crear registro de mora: ${error.message}`,
+      );
+    }
+  }
+
+  /**
+   * Genera un UUID para ser usado como ID primario
+   */
+  private generateUuid(): string {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
+      /[xy]/g,
+      function (c) {
+        const r = (Math.random() * 16) | 0,
+          v = c === 'x' ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      },
+    );
   }
 
   private construirEstadoCuenta(

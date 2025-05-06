@@ -2310,9 +2310,9 @@ export namespace Prisma {
     nombreColonia: string
     oblYear: string
     dias: number
-    impuesto: Decimal
-    trenDeAseo: Decimal
-    tasaBomberos: Decimal
+    impuesto: Decimal | null
+    trenDeAseo: Decimal | null
+    tasaBomberos: Decimal | null
     _count: MoraCountAggregateOutputType | null
     _avg: MoraAvgAggregateOutputType | null
     _sum: MoraSumAggregateOutputType | null
@@ -2384,9 +2384,9 @@ export namespace Prisma {
       nombreColonia: string
       oblYear: string
       dias: number
-      impuesto: Prisma.Decimal
-      trenDeAseo: Prisma.Decimal
-      tasaBomberos: Prisma.Decimal
+      impuesto: Prisma.Decimal | null
+      trenDeAseo: Prisma.Decimal | null
+      tasaBomberos: Prisma.Decimal | null
     }, ExtArgs["result"]["mora"]>
     composites: {}
   }
@@ -4138,6 +4138,14 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
   /**
    * Field references
    */
@@ -4241,9 +4249,9 @@ export namespace Prisma {
     nombreColonia?: StringFilter<"Mora"> | string
     oblYear?: StringFilter<"Mora"> | string
     dias?: IntFilter<"Mora"> | number
-    impuesto?: DecimalFilter<"Mora"> | Decimal | DecimalJsLike | number | string
-    trenDeAseo?: DecimalFilter<"Mora"> | Decimal | DecimalJsLike | number | string
-    tasaBomberos?: DecimalFilter<"Mora"> | Decimal | DecimalJsLike | number | string
+    impuesto?: DecimalNullableFilter<"Mora"> | Decimal | DecimalJsLike | number | string | null
+    trenDeAseo?: DecimalNullableFilter<"Mora"> | Decimal | DecimalJsLike | number | string | null
+    tasaBomberos?: DecimalNullableFilter<"Mora"> | Decimal | DecimalJsLike | number | string | null
     clavesRutas?: XOR<ClavesRutasNullableScalarRelationFilter, ClavesRutasWhereInput> | null
   }
 
@@ -4256,9 +4264,9 @@ export namespace Prisma {
     nombreColonia?: SortOrder
     oblYear?: SortOrder
     dias?: SortOrder
-    impuesto?: SortOrder
-    trenDeAseo?: SortOrder
-    tasaBomberos?: SortOrder
+    impuesto?: SortOrderInput | SortOrder
+    trenDeAseo?: SortOrderInput | SortOrder
+    tasaBomberos?: SortOrderInput | SortOrder
     clavesRutas?: ClavesRutasOrderByWithRelationInput
   }
 
@@ -4274,9 +4282,9 @@ export namespace Prisma {
     nombreColonia?: StringFilter<"Mora"> | string
     oblYear?: StringFilter<"Mora"> | string
     dias?: IntFilter<"Mora"> | number
-    impuesto?: DecimalFilter<"Mora"> | Decimal | DecimalJsLike | number | string
-    trenDeAseo?: DecimalFilter<"Mora"> | Decimal | DecimalJsLike | number | string
-    tasaBomberos?: DecimalFilter<"Mora"> | Decimal | DecimalJsLike | number | string
+    impuesto?: DecimalNullableFilter<"Mora"> | Decimal | DecimalJsLike | number | string | null
+    trenDeAseo?: DecimalNullableFilter<"Mora"> | Decimal | DecimalJsLike | number | string | null
+    tasaBomberos?: DecimalNullableFilter<"Mora"> | Decimal | DecimalJsLike | number | string | null
     clavesRutas?: XOR<ClavesRutasNullableScalarRelationFilter, ClavesRutasWhereInput> | null
   }, "id">
 
@@ -4289,9 +4297,9 @@ export namespace Prisma {
     nombreColonia?: SortOrder
     oblYear?: SortOrder
     dias?: SortOrder
-    impuesto?: SortOrder
-    trenDeAseo?: SortOrder
-    tasaBomberos?: SortOrder
+    impuesto?: SortOrderInput | SortOrder
+    trenDeAseo?: SortOrderInput | SortOrder
+    tasaBomberos?: SortOrderInput | SortOrder
     _count?: MoraCountOrderByAggregateInput
     _avg?: MoraAvgOrderByAggregateInput
     _max?: MoraMaxOrderByAggregateInput
@@ -4311,9 +4319,9 @@ export namespace Prisma {
     nombreColonia?: StringWithAggregatesFilter<"Mora"> | string
     oblYear?: StringWithAggregatesFilter<"Mora"> | string
     dias?: IntWithAggregatesFilter<"Mora"> | number
-    impuesto?: DecimalWithAggregatesFilter<"Mora"> | Decimal | DecimalJsLike | number | string
-    trenDeAseo?: DecimalWithAggregatesFilter<"Mora"> | Decimal | DecimalJsLike | number | string
-    tasaBomberos?: DecimalWithAggregatesFilter<"Mora"> | Decimal | DecimalJsLike | number | string
+    impuesto?: DecimalNullableWithAggregatesFilter<"Mora"> | Decimal | DecimalJsLike | number | string | null
+    trenDeAseo?: DecimalNullableWithAggregatesFilter<"Mora"> | Decimal | DecimalJsLike | number | string | null
+    tasaBomberos?: DecimalNullableWithAggregatesFilter<"Mora"> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type RutasColoniaWhereInput = {
@@ -4421,9 +4429,9 @@ export namespace Prisma {
     nombreColonia: string
     oblYear: string
     dias: number
-    impuesto: Decimal | DecimalJsLike | number | string
-    trenDeAseo: Decimal | DecimalJsLike | number | string
-    tasaBomberos: Decimal | DecimalJsLike | number | string
+    impuesto?: Decimal | DecimalJsLike | number | string | null
+    trenDeAseo?: Decimal | DecimalJsLike | number | string | null
+    tasaBomberos?: Decimal | DecimalJsLike | number | string | null
     clavesRutas?: ClavesRutasCreateNestedOneWithoutMoraInput
   }
 
@@ -4436,9 +4444,9 @@ export namespace Prisma {
     nombreColonia: string
     oblYear: string
     dias: number
-    impuesto: Decimal | DecimalJsLike | number | string
-    trenDeAseo: Decimal | DecimalJsLike | number | string
-    tasaBomberos: Decimal | DecimalJsLike | number | string
+    impuesto?: Decimal | DecimalJsLike | number | string | null
+    trenDeAseo?: Decimal | DecimalJsLike | number | string | null
+    tasaBomberos?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type MoraUpdateInput = {
@@ -4449,9 +4457,9 @@ export namespace Prisma {
     nombreColonia?: StringFieldUpdateOperationsInput | string
     oblYear?: StringFieldUpdateOperationsInput | string
     dias?: IntFieldUpdateOperationsInput | number
-    impuesto?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    trenDeAseo?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    tasaBomberos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    impuesto?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    trenDeAseo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    tasaBomberos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     clavesRutas?: ClavesRutasUpdateOneWithoutMoraNestedInput
   }
 
@@ -4464,9 +4472,9 @@ export namespace Prisma {
     nombreColonia?: StringFieldUpdateOperationsInput | string
     oblYear?: StringFieldUpdateOperationsInput | string
     dias?: IntFieldUpdateOperationsInput | number
-    impuesto?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    trenDeAseo?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    tasaBomberos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    impuesto?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    trenDeAseo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    tasaBomberos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type MoraCreateManyInput = {
@@ -4478,9 +4486,9 @@ export namespace Prisma {
     nombreColonia: string
     oblYear: string
     dias: number
-    impuesto: Decimal | DecimalJsLike | number | string
-    trenDeAseo: Decimal | DecimalJsLike | number | string
-    tasaBomberos: Decimal | DecimalJsLike | number | string
+    impuesto?: Decimal | DecimalJsLike | number | string | null
+    trenDeAseo?: Decimal | DecimalJsLike | number | string | null
+    tasaBomberos?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type MoraUpdateManyMutationInput = {
@@ -4491,9 +4499,9 @@ export namespace Prisma {
     nombreColonia?: StringFieldUpdateOperationsInput | string
     oblYear?: StringFieldUpdateOperationsInput | string
     dias?: IntFieldUpdateOperationsInput | number
-    impuesto?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    trenDeAseo?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    tasaBomberos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    impuesto?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    trenDeAseo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    tasaBomberos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type MoraUncheckedUpdateManyInput = {
@@ -4505,9 +4513,9 @@ export namespace Prisma {
     nombreColonia?: StringFieldUpdateOperationsInput | string
     oblYear?: StringFieldUpdateOperationsInput | string
     dias?: IntFieldUpdateOperationsInput | number
-    impuesto?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    trenDeAseo?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    tasaBomberos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    impuesto?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    trenDeAseo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    tasaBomberos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type RutasColoniaCreateInput = {
@@ -4669,20 +4677,25 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type DecimalFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
+  export type DecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
     lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type ClavesRutasNullableScalarRelationFilter = {
     is?: ClavesRutasWhereInput | null
     isNot?: ClavesRutasWhereInput | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type MoraCountOrderByAggregateInput = {
@@ -4757,20 +4770,20 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
+  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
     lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedDecimalFilter<$PrismaModel>
-    _sum?: NestedDecimalFilter<$PrismaModel>
-    _min?: NestedDecimalFilter<$PrismaModel>
-    _max?: NestedDecimalFilter<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
   export type ClavesRutasListRelationFilter = {
@@ -4885,8 +4898,8 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type DecimalFieldUpdateOperationsInput = {
-    set?: Decimal | DecimalJsLike | number | string
+  export type NullableDecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string | null
     increment?: Decimal | DecimalJsLike | number | string
     decrement?: Decimal | DecimalJsLike | number | string
     multiply?: Decimal | DecimalJsLike | number | string
@@ -5014,15 +5027,15 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type NestedDecimalFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
+  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
     lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -5041,20 +5054,31 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    in?: Decimal[] | DecimalJsLike[] | number[] | string[]
-    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[]
+  export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
     lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
-    not?: NestedDecimalWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedDecimalFilter<$PrismaModel>
-    _sum?: NestedDecimalFilter<$PrismaModel>
-    _min?: NestedDecimalFilter<$PrismaModel>
-    _max?: NestedDecimalFilter<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type MoraCreateWithoutClavesRutasInput = {
@@ -5065,9 +5089,9 @@ export namespace Prisma {
     nombreColonia: string
     oblYear: string
     dias: number
-    impuesto: Decimal | DecimalJsLike | number | string
-    trenDeAseo: Decimal | DecimalJsLike | number | string
-    tasaBomberos: Decimal | DecimalJsLike | number | string
+    impuesto?: Decimal | DecimalJsLike | number | string | null
+    trenDeAseo?: Decimal | DecimalJsLike | number | string | null
+    tasaBomberos?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type MoraUncheckedCreateWithoutClavesRutasInput = {
@@ -5078,9 +5102,9 @@ export namespace Prisma {
     nombreColonia: string
     oblYear: string
     dias: number
-    impuesto: Decimal | DecimalJsLike | number | string
-    trenDeAseo: Decimal | DecimalJsLike | number | string
-    tasaBomberos: Decimal | DecimalJsLike | number | string
+    impuesto?: Decimal | DecimalJsLike | number | string | null
+    trenDeAseo?: Decimal | DecimalJsLike | number | string | null
+    tasaBomberos?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type MoraCreateOrConnectWithoutClavesRutasInput = {
@@ -5137,9 +5161,9 @@ export namespace Prisma {
     nombreColonia?: StringFilter<"Mora"> | string
     oblYear?: StringFilter<"Mora"> | string
     dias?: IntFilter<"Mora"> | number
-    impuesto?: DecimalFilter<"Mora"> | Decimal | DecimalJsLike | number | string
-    trenDeAseo?: DecimalFilter<"Mora"> | Decimal | DecimalJsLike | number | string
-    tasaBomberos?: DecimalFilter<"Mora"> | Decimal | DecimalJsLike | number | string
+    impuesto?: DecimalNullableFilter<"Mora"> | Decimal | DecimalJsLike | number | string | null
+    trenDeAseo?: DecimalNullableFilter<"Mora"> | Decimal | DecimalJsLike | number | string | null
+    tasaBomberos?: DecimalNullableFilter<"Mora"> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type RutasColoniaUpsertWithoutClavesRutasInput = {
@@ -5266,9 +5290,9 @@ export namespace Prisma {
     nombreColonia: string
     oblYear: string
     dias: number
-    impuesto: Decimal | DecimalJsLike | number | string
-    trenDeAseo: Decimal | DecimalJsLike | number | string
-    tasaBomberos: Decimal | DecimalJsLike | number | string
+    impuesto?: Decimal | DecimalJsLike | number | string | null
+    trenDeAseo?: Decimal | DecimalJsLike | number | string | null
+    tasaBomberos?: Decimal | DecimalJsLike | number | string | null
   }
 
   export type MoraUpdateWithoutClavesRutasInput = {
@@ -5279,9 +5303,9 @@ export namespace Prisma {
     nombreColonia?: StringFieldUpdateOperationsInput | string
     oblYear?: StringFieldUpdateOperationsInput | string
     dias?: IntFieldUpdateOperationsInput | number
-    impuesto?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    trenDeAseo?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    tasaBomberos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    impuesto?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    trenDeAseo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    tasaBomberos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type MoraUncheckedUpdateWithoutClavesRutasInput = {
@@ -5292,9 +5316,9 @@ export namespace Prisma {
     nombreColonia?: StringFieldUpdateOperationsInput | string
     oblYear?: StringFieldUpdateOperationsInput | string
     dias?: IntFieldUpdateOperationsInput | number
-    impuesto?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    trenDeAseo?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    tasaBomberos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    impuesto?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    trenDeAseo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    tasaBomberos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type MoraUncheckedUpdateManyWithoutClavesRutasInput = {
@@ -5305,9 +5329,9 @@ export namespace Prisma {
     nombreColonia?: StringFieldUpdateOperationsInput | string
     oblYear?: StringFieldUpdateOperationsInput | string
     dias?: IntFieldUpdateOperationsInput | number
-    impuesto?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    trenDeAseo?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    tasaBomberos?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    impuesto?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    trenDeAseo?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    tasaBomberos?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
   }
 
   export type ClavesRutasCreateManyRutaColoniaInput = {

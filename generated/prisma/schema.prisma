@@ -27,17 +27,17 @@ model ClavesRutas {
 }
 
 model Mora {
-  id            String  @id @default(uuid()) @map("MoraId")
-  artIdDoc      String  @map("ART_ID_DOC") @db.NVarChar(255)
-  actIdCard     String  @map("ACT_ID_CARD") @db.NVarChar(40)
-  nombre        String  @map("NOMBRE") @db.NVarChar(323)
-  sectorColonia String  @map("SECTOR_COLONIA") @db.NVarChar(50)
-  nombreColonia String  @map("NOMBRE_COLONIA") @db.NVarChar(60)
-  oblYear       String  @map("OBL_YEAR") @db.VarChar(50)
-  dias          Int     @map("DIAS")
-  impuesto      Decimal @map("IMPUESTO") @db.Decimal(38, 2)
-  trenDeAseo    Decimal @map("TREN_DE_ASEO") @db.Decimal(38, 2)
-  tasaBomberos  Decimal @map("TASA_BOMBEROS") @db.Decimal(38, 2)
+  id            String   @id @default(uuid()) @map("MoraId")
+  artIdDoc      String   @map("ART_ID_DOC") @db.NVarChar(255)
+  actIdCard     String   @map("ACT_ID_CARD") @db.NVarChar(40)
+  nombre        String   @map("NOMBRE") @db.NVarChar(323)
+  sectorColonia String   @map("SECTOR_COLONIA") @db.NVarChar(50)
+  nombreColonia String   @map("NOMBRE_COLONIA") @db.NVarChar(60)
+  oblYear       String   @map("OBL_YEAR") @db.VarChar(50)
+  dias          Int      @map("DIAS")
+  impuesto      Decimal? @map("IMPUESTO") @db.Decimal(38, 2)
+  trenDeAseo    Decimal? @map("TREN_DE_ASEO") @db.Decimal(38, 2)
+  tasaBomberos  Decimal? @map("TASA_BOMBEROS") @db.Decimal(38, 2)
 
   clavesRutas ClavesRutas? @relation(fields: [artIdDoc], references: [claveCatastral])
 

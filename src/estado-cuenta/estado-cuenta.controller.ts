@@ -1,6 +1,8 @@
 import {
   Controller,
   Get,
+  Post,
+  Body,
   Query,
   ValidationPipe,
   HttpException,
@@ -9,6 +11,7 @@ import {
 import { EstadoCuentaService } from './estado-cuenta.service';
 import { GetEstadoCuentaDto } from './dto/get-estado-cuenta.dto';
 import { GetEstadoCuentaPorRutaDto } from './dto/get-estado-cuenta-por-ruta.dto';
+import { CreateMoraDto } from './dto/create-mora.dto';
 import { EstadoCuentaResponseDto } from './dto/estado-cuenta-response.dto';
 
 @Controller('estado-cuenta')
@@ -37,7 +40,9 @@ export class EstadoCuentaController {
     @Query(ValidationPipe) getEstadoCuentaPorRutaDto: GetEstadoCuentaPorRutaDto,
   ): Promise<EstadoCuentaResponseDto[]> {
     try {
-      return await this.estadoCuentaService.getEstadoCuentaPorRuta(getEstadoCuentaPorRutaDto);
+      return await this.estadoCuentaService.getEstadoCuentaPorRuta(
+        getEstadoCuentaPorRutaDto,
+      );
     } catch (error) {
       throw new HttpException(
         {
@@ -45,6 +50,23 @@ export class EstadoCuentaController {
           error: error.message,
         },
         HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  @Post()
+  async createMora(
+    @Body(ValidationPipe) createMoraDto: CreateMoraDto,
+  ): Promise<any> {
+    try {
+      return await this.estadoCuentaService.createMora(createMoraDto);
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: error.status || HttpStatus.BAD_REQUEST,
+          error: error.message,
+        },
+        error.status || HttpStatus.BAD_REQUEST,
       );
     }
   }
