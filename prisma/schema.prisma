@@ -31,7 +31,7 @@ model Mora {
   artIdDoc      String   @map("ART_ID_DOC") @db.NVarChar(255)
   actIdCard     String   @map("ACT_ID_CARD") @db.NVarChar(40)
   nombre        String   @map("NOMBRE") @db.NVarChar(323)
-  sectorColonia String   @map("SECTOR_COLONIA") @db.NVarChar(50)
+  sectorColonia String?   @map("SECTOR_COLONIA") @db.NVarChar(50)
   nombreColonia String   @map("NOMBRE_COLONIA") @db.NVarChar(60)
   oblYear       String   @map("OBL_YEAR") @db.VarChar(50)
   dias          Int      @map("DIAS")
@@ -52,4 +52,33 @@ model RutasColonia {
   clavesRutas ClavesRutas[]
 
   @@map("RUTAS_COLONIA")
+}
+
+model User {
+  id        String   @id @default(uuid()) @map("UserId")
+  username  String   @unique @map("USERNAME") @db.VarChar(50)
+  password  String   @map("PASSWORD") @db.VarChar(100)
+  email     String   @unique @map("EMAIL") @db.VarChar(100)
+  fullName  String   @map("FULL_NAME") @db.VarChar(150)
+  role      String   @map("ROLE") @db.VarChar(20)
+  isActive  Boolean  @default(true) @map("IS_ACTIVE")
+  createdAt DateTime @default(now()) @map("CREATED_AT")
+  updatedAt DateTime @updatedAt @map("UPDATED_AT")
+  
+  logs      Log[]
+
+  @@map("USERS")
+}
+
+model Log {
+  id        String   @id @default(uuid()) @map("LogId")
+  action    String   @map("ACTION") @db.VarChar(200)
+  detail    String?  @map("DETAIL") @db.NVarChar(1000)
+  ipAddress String?  @map("IP_ADDRESS") @db.VarChar(50)
+  timestamp DateTime @default(now()) @map("TIMESTAMP")
+  userId    String   @map("USER_ID")
+  
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("LOGS")
 }

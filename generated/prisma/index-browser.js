@@ -148,6 +148,27 @@ exports.Prisma.RutasColoniaScalarFieldEnum = {
   colonia: 'colonia'
 };
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  username: 'username',
+  password: 'password',
+  email: 'email',
+  fullName: 'fullName',
+  role: 'role',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.LogScalarFieldEnum = {
+  id: 'id',
+  action: 'action',
+  detail: 'detail',
+  ipAddress: 'ipAddress',
+  timestamp: 'timestamp',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -162,7 +183,9 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   ClavesRutas: 'ClavesRutas',
   Mora: 'Mora',
-  RutasColonia: 'RutasColonia'
+  RutasColonia: 'RutasColonia',
+  User: 'User',
+  Log: 'Log'
 };
 
 /**
