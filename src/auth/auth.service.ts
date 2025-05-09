@@ -108,27 +108,53 @@ export class AuthService {
   }
 
   async findUserById(id: string): Promise<User | null> {
-    const users = await this.prisma.$queryRaw`
-      SELECT * FROM USERS WHERE UserId = ${id}
-    `;
+    // Agregar logs para depuración
+    console.log(`Buscando usuario con ID: ${id}`);
+    
+    try {
+      const users = await this.prisma.$queryRaw`
+        SELECT * FROM USERS WHERE UserId = ${id}
+      `;
 
-    if (!users || (users as any[]).length === 0) {
+      console.log('Resultado de la consulta:', users);
+
+      if (!users || (users as any[]).length === 0) {
+        console.log(`No se encontró ningún usuario con ID: ${id}`);
+        return null;
+      }
+
+      const user = (users as any[])[0];
+      
+      // Mostrar los detalles del usuario encontrado
+      console.log('Usuario encontrado:', {
+        id: user.UserId,
+        username: user.USERNAME,
+        isActive: user.IS_ACTIVE,
+        role: user.ROLE
+      });
+      
+      // Convertir IS_ACTIVE a booleano de manera más explícita
+      const isActive = user.IS_ACTIVE === 1 || user.IS_ACTIVE === true || 
+                      user.IS_ACTIVE === '1' || user.IS_ACTIVE === 'true' || 
+                      String(user.IS_ACTIVE).toLowerCase() === 'true';
+      
+      console.log('Valor de IS_ACTIVE después de conversión:', isActive);
+      
+      return {
+        id: user.UserId,
+        username: user.USERNAME,
+        password: user.PASSWORD,
+        email: user.EMAIL,
+        fullName: user.FULL_NAME,
+        role: user.ROLE,
+        isActive: isActive,
+        createdAt: user.CREATED_AT,
+        updatedAt: user.UPDATED_AT,
+      };
+    } catch (error) {
+      console.error('Error al buscar usuario por ID:', error);
       return null;
     }
-
-    const user = (users as any[])[0];
-    
-    return {
-      id: user.UserId,
-      username: user.USERNAME,
-      password: user.PASSWORD,
-      email: user.EMAIL,
-      fullName: user.FULL_NAME,
-      role: user.ROLE,
-      isActive: user.IS_ACTIVE === 1,
-      createdAt: user.CREATED_AT,
-      updatedAt: user.UPDATED_AT,
-    };
   }
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {

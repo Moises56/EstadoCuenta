@@ -13,9 +13,9 @@ async function bootstrap() {
     transform: true,
   }));
   
-  // Habilitar CORS para permitir conexiones desde el puerto 4200 (Angular)
+  // Habilitar CORS para permitir conexiones desde varios orígenes
   app.enableCors({
-    origin: 'http://localhost:4200',
+    origin: ['http://localhost:4200', 'http://localhost:8080', 'http://localhost', 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   });

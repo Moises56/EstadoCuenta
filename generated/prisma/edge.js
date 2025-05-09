@@ -202,7 +202,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "sqlserver://GIS-MAVILES:1433;database=EstadoCuenta-db;user=sa;password=asd456;encrypt=true;trustServerCertificate=true"
+        "value": "sqlserver://192.168.200.145;database=EstadoCuenta-db;user=sa;password=7654321;encrypt=true;trustServerCertificate=true;connectionTimeout=30;pool=5;connectRetryCount=5;connectRetryInterval=3"
       }
     }
   },

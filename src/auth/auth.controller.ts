@@ -149,4 +149,19 @@ export class AuthController {
     const user = await this.authService.findUserById(req.user.id);
     return this.authService.getUserResponse(user);
   }
+
+  @Get('test-auth')
+  async testAuth(@Req() req: Request) {
+    // Este endpoint simplemente devuelve la información del usuario si está autenticado
+    return {
+      message: 'Autenticación exitosa',
+      user: {
+        id: req.user.id,
+        username: req.user.username,
+        role: req.user.role
+      },
+      requestHeaders: req.headers,
+      requestCookies: req.cookies
+    };
+  }
 }
