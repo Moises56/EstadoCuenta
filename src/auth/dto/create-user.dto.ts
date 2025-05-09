@@ -4,6 +4,7 @@ export enum UserRole {
   ADMIN = 'ADMIN',
   OPERADOR = 'OPERADOR',
   USER = 'USER',
+  SUPERVISOR = 'SUPERVISOR',
 }
 
 export class CreateUserDto {
@@ -25,6 +26,6 @@ export class CreateUserDto {
   fullName: string;
 
   @IsOptional()
-  @IsEnum(UserRole, { message: 'Rol inválido. Debe ser ADMIN, OPERADOR o USER' })
+  @IsEnum(UserRole, { message: 'Rol inválido. Debe ser ADMIN, OPERADOR, SUPERVISOR o USER' })
   role: UserRole = UserRole.USER;
 }

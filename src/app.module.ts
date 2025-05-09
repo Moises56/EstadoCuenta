@@ -8,13 +8,15 @@ import { AuthModule } from './auth/auth.module';
 import { LogModule } from './logs/log.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { RolesGuard } from './auth/guards/roles.guard';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
   imports: [
     PrismaModule, 
     EstadoCuentaModule,
     AuthModule,
-    LogModule
+    LogModule,
+    DashboardModule
   ],
   controllers: [AppController],
   providers: [
